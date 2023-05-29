@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hotel_management_system/order_model.dart';
+import 'package:intl/intl.dart';
 
 class NewOrderListScreen extends StatefulWidget {
   const NewOrderListScreen({super.key});
@@ -21,19 +22,19 @@ class _NewOrderListScreenState extends State<NewOrderListScreen> {
         itemName: 'Pizza',
         price: 120,
         quantity: 2,
-        orderTime: DateTime.now().subtract(Duration(minutes: 10))),
+        orderTime: DateTime(2023, 5, 29, 17, 30)),
     Order(
         tableNumber: 2,
         itemName: 'Burger',
         price: 60,
         quantity: 1,
-        orderTime: DateTime.now().subtract(Duration(hours: 1))),
+        orderTime: DateTime(2023, 5, 29, 18, 30)),
     Order(
         tableNumber: 3,
         itemName: 'Sushi',
         price: 200,
         quantity: 3,
-        orderTime: DateTime.now().subtract(Duration(minutes: 30))),
+        orderTime: DateTime(2023, 5, 29, 19, 30)),
   ];
   int _subTotalQuantity = 0;
   double _subTotalPrice = 0;
@@ -60,29 +61,52 @@ class _NewOrderListScreenState extends State<NewOrderListScreen> {
         //     },
         //     child: Text("Staff Info")),
         title: Container(
-          width: 200,
+          width: double.infinity,
           child: Row(
             children: [
-              TextButton(
-                  style: TextButton.styleFrom(foregroundColor: Colors.black),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed("/staff_info");
-                  },
-                  child: Text("Staff Info")),
-              TextButton(
-                  style: TextButton.styleFrom(foregroundColor: Colors.black),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed("/staff_info");
-                  },
-                  child: Text("Staff Info")),
-              TextButton(
-                  style: TextButton.styleFrom(foregroundColor: Colors.black),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed("/staff_info");
-                  },
-                  child: Text("Staff Info")),
+              Row(
+                children: [
+                  TextButton(
+                      style: TextButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.black),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed("/orderscreen");
+                      },
+                      child: Text("Home")),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  // TextButton(
+                  //     style:
+                  //         TextButton.styleFrom(foregroundColor: Colors.black),
+                  //     onPressed: () {
+                  //       Navigator.of(context).pushNamed("/staff_info");
+                  //     },
+                  //     child: Text("Revenue")),
+                  TextButton(
+                      style: TextButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.black),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed("/staff_info");
+                      },
+                      child: Text("Staff Details")),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  TextButton(
+                      style: TextButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.black),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed("/staff_info");
+                      },
+                      child: Text("About-Us")),
+                ],
+              ),
               SizedBox(
-                width: 50,
+                width: 150,
               ),
               Text(
                 'Hotel Order Management System',
@@ -118,7 +142,7 @@ class _NewOrderListScreenState extends State<NewOrderListScreen> {
                       ],
                     ),
                     subtitle: Text(
-                        'Ordered ${_getOrderTimeString(_orders[index].orderTime)}',
+                        'Ordered ${_getOrderTimeAgoString(_orders[index].orderTime)}',
                         style: GoogleFonts.poppins(color: Colors.white)),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -164,6 +188,14 @@ class _NewOrderListScreenState extends State<NewOrderListScreen> {
                         Text('${_orders[index].quantity}',
                             style: GoogleFonts.poppins(
                                 color: Colors.yellow, fontSize: 15)),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Text('Order Time: ',
+                            style: GoogleFonts.poppins(color: Colors.white)),
+                        Text('${_getOrderTimeString(_orders[index].orderTime)}',
+                            style: GoogleFonts.poppins(
+                                color: Colors.black, fontSize: 15)),
                         SizedBox(
                           width: 15,
                         ),
@@ -259,7 +291,7 @@ class _NewOrderListScreenState extends State<NewOrderListScreen> {
     );
   }
 
-  String _getOrderTimeString(DateTime orderTime) {
+  String _getOrderTimeAgoString(DateTime orderTime) {
     final now = DateTime.now();
     final difference = now.difference(orderTime);
     if (difference.inDays > 0) {
@@ -271,6 +303,11 @@ class _NewOrderListScreenState extends State<NewOrderListScreen> {
     } else {
       return 'Just now';
     }
+  }
+
+  _getOrderTimeString(DateTime orderTime) {
+    final time = DateFormat('dd MMMM yyyy hh:mm a').format(orderTime);
+    return time;
   }
 
   void _addSubTotalPrice() {
@@ -287,6 +324,9 @@ class _NewOrderListScreenState extends State<NewOrderListScreen> {
     setState(() {
       _subTotalPrice -= price;
       _subtotalDecreased = true;
+      if (_subTotalPrice < 0) {
+        _subTotalPrice = 0;
+      }
     });
   }
 
@@ -303,6 +343,9 @@ class _NewOrderListScreenState extends State<NewOrderListScreen> {
   void _decreaseItemQuantity(int quantity) {
     setState(() {
       _subTotalQuantity -= quantity;
+      if (_subTotalQuantity < 0) {
+        _subTotalQuantity = 0;
+      }
     });
   }
 }
