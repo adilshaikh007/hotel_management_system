@@ -12,6 +12,8 @@ class StaffDetailsScreen extends StatefulWidget {
 class _StaffDetailsScreenState extends State<StaffDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Colors.white,
+    );
   }
 }
