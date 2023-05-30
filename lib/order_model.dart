@@ -3,7 +3,7 @@ class Order {
   String itemName;
   double price;
   int quantity;
-  
+
   DateTime orderTime;
   bool delivered;
   bool cancelled;
@@ -16,7 +16,6 @@ class Order {
     required this.itemName,
     required this.price,
     required this.quantity,
-    
     required this.orderTime,
     this.delivered = false,
     this.cancelled = false,

@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hotel_management_system/about_us_screen.dart';
+import 'package:hotel_management_system/home_screen.dart';
 import 'package:hotel_management_system/login_screen.dart';
 import 'package:hotel_management_system/order_list_screen.dart';
 import 'package:hotel_management_system/staff_details_screen.dart';
-import 'new_order_list_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,12 +33,12 @@ class _MyAppState extends State<MyApp> {
           bodyText2: GoogleFonts.poppins(fontSize: 14.0),
         ),
       ),
-      home: NewOrderListScreen(),
+      home: HomeScreen(),
       routes: {
-        "/orderscreen": (context) => NewOrderListScreen(),
+        "/home": (context) => HomeScreen(),
         "/staff_info": (context) => StaffDetailsScreen(),
-        "/login_screen": (context) => LoginScreen(),
-        "/about-us": (context) => AboutUsScreen(),
+        "/login": (context) => LoginScreen(),
+        "/about_us": (context) => AboutUsScreen(),
       },
     );
   }

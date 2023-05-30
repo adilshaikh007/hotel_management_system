@@ -4,14 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hotel_management_system/order_model.dart';
 import 'package:intl/intl.dart';
 
-class NewOrderListScreen extends StatefulWidget {
-  const NewOrderListScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<NewOrderListScreen> createState() => _NewOrderListScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _NewOrderListScreenState extends State<NewOrderListScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   Color _dbuttonColor = Colors.pinkAccent;
   String _dbuttonText = 'Accept';
   bool _isDelivered = true;
@@ -60,6 +60,7 @@ class _NewOrderListScreenState extends State<NewOrderListScreen> {
         //       Navigator.of(context).pushNamed("/staff_info");
         //     },
         //     child: Text("Staff Info")),
+
         title: Container(
           width: double.infinity,
           child: Row(
@@ -71,9 +72,12 @@ class _NewOrderListScreenState extends State<NewOrderListScreen> {
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.black),
                       onPressed: () {
-                        Navigator.of(context).pushNamed("/orderscreen");
+                        Navigator.of(context).pushNamed("/home");
                       },
-                      child: Text("Home")),
+                      child: Text(
+                        "Home",
+                        style: GoogleFonts.poppins(),
+                      )),
                   SizedBox(
                     width: 10,
                   ),
@@ -91,7 +95,8 @@ class _NewOrderListScreenState extends State<NewOrderListScreen> {
                       onPressed: () {
                         Navigator.of(context).pushNamed("/staff_info");
                       },
-                      child: Text("Staff Details")),
+                      child:
+                          Text("Staff Details", style: GoogleFonts.poppins())),
                   SizedBox(
                     width: 10,
                   ),
@@ -100,9 +105,9 @@ class _NewOrderListScreenState extends State<NewOrderListScreen> {
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.black),
                       onPressed: () {
-                        Navigator.of(context).pushNamed("/staff_info");
+                        Navigator.of(context).pushNamed("/about_us");
                       },
-                      child: Text("About-Us")),
+                      child: Text("About-Us", style: GoogleFonts.poppins())),
                 ],
               ),
               SizedBox(
@@ -115,6 +120,60 @@ class _NewOrderListScreenState extends State<NewOrderListScreen> {
             ],
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: TextButton(
+                child: Text(
+                  "Logout",
+                  style: GoogleFonts.poppins(),
+                ),
+                style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.black),
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: Colors.black,
+                          title: Text(
+                            'Are you sure you want to Logout?',
+                            style: GoogleFonts.poppins(color: Colors.white),
+                          ),
+                          actions: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                TextButton(
+                                  child: Text(
+                                    'Cancel',
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.green),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text(
+                                    'Confirm',
+                                    style:
+                                        GoogleFonts.poppins(color: Colors.red),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed("/login");
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      });
+                }),
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -235,19 +294,82 @@ class _NewOrderListScreenState extends State<NewOrderListScreen> {
                               ? null
                               : () {
                                   setState(() {
-                                    _orders[index].cancelled = true;
-                                    if (_orders[index].cancelled) {
-                                      _orders[index].delivered = false;
-                                      _orders[index].dbuttonText = 'Accept';
-                                      _orders[index].cbuttonText = 'Cancelled';
-                                      var price = _orders[index].price *
-                                          _orders[index].quantity;
-                                      _decreaseSubTotalPrice(price);
-                                      var quantity = _orders[index].quantity;
-                                      _decreaseItemQuantity(quantity);
-                                    } else {
-                                      _orders[index].cbuttonText = 'Cancel';
-                                    }
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            backgroundColor: Colors.black,
+                                            title: Text(
+                                              'Are you sure you want to Cancel?',
+                                              style: GoogleFonts.poppins(
+                                                  color: Colors.white),
+                                            ),
+                                            actions: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceAround,
+                                                children: <Widget>[
+                                                  TextButton(
+                                                    child: Text(
+                                                      'Cancel',
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                              color:
+                                                                  Colors.red),
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                  TextButton(
+                                                    child: Text(
+                                                      'Confirm',
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                              color:
+                                                                  Colors.green),
+                                                    ),
+                                                    onPressed: () {
+                                                      _orders[index].cancelled =
+                                                          true;
+                                                      if (_orders[index]
+                                                          .cancelled) {
+                                                        _orders[index]
+                                                            .delivered = false;
+                                                        _orders[index]
+                                                                .dbuttonText =
+                                                            'Accept';
+                                                        _orders[index]
+                                                                .cbuttonText =
+                                                            'Cancelled';
+                                                        var price =
+                                                            _orders[index]
+                                                                    .price *
+                                                                _orders[index]
+                                                                    .quantity;
+                                                        _decreaseSubTotalPrice(
+                                                            price);
+                                                        var quantity =
+                                                            _orders[index]
+                                                                .quantity;
+                                                        _decreaseItemQuantity(
+                                                            quantity);
+                                                      } else {
+                                                        _orders[index]
+                                                                .cbuttonText =
+                                                            'Cancel';
+                                                      }
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          );
+                                        });
                                   });
                                 },
                           child: Text(_orders[index].cbuttonText,
