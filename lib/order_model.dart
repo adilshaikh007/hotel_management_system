@@ -9,8 +9,13 @@ class Order {
   bool cancelled;
   String dbuttonText;
   String cbuttonText;
+  String kotbuttonText;
+  bool kotprinted;
   bool subtotalUpdated;
   bool subtotalDecreased;
+  bool orderAccepted;
+  bool acceptbuttonpressed;
+  bool decreasepricetoggle;
   Order({
     required this.tableNumber,
     required this.itemName,
@@ -18,10 +23,15 @@ class Order {
     required this.quantity,
     required this.orderTime,
     this.delivered = false,
+    this.orderAccepted = false,
+    this.kotprinted = false,
     this.cancelled = false,
     this.subtotalUpdated = false,
     this.subtotalDecreased = false,
+    this.acceptbuttonpressed = false,
+    this.decreasepricetoggle = false,
   })  : dbuttonText = delivered ? 'Accepted' : 'Accept',
+        kotbuttonText = kotprinted ? 'KOT printed' : 'Print KOT',
         cbuttonText = cancelled ? 'Cancelled' : 'Cancel';
 }
 

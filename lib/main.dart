@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hotel_management_system/about_us_screen.dart';
+import 'package:hotel_management_system/print_pdf.dart';
 import 'package:hotel_management_system/home_screen.dart';
 import 'package:hotel_management_system/login_screen.dart';
 import 'package:hotel_management_system/order_model.dart';
@@ -29,6 +30,7 @@ class _MyAppState extends State<MyApp> {
         '/staff_info': (context) => StaffDetailsScreen(),
         '/about_us': (context) => AboutUsScreen(),
         '/login': (context) => LoginScreen(),
+        //    "/printpreview": (context) => PrintPdf(),
       },
       home: HomeScreen(),
     );
