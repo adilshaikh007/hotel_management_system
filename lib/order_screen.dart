@@ -24,20 +24,24 @@ class _OrderScreenState extends State<OrderScreen> {
   String _dbuttonText = 'Accept';
   bool _isDelivered = true;
   String _cbuttonText = 'Cancel';
+
   List<Order> _orders = [
     Order(
+        ordernumber: 1,
         tableNumber: 1,
         itemName: 'Pizza',
         price: 120,
         quantity: 2,
         orderTime: DateTime(2023, 5, 29, 17, 30)),
     Order(
+        ordernumber: 2,
         tableNumber: 2,
         itemName: 'Burger',
         price: 60,
         quantity: 1,
         orderTime: DateTime(2023, 5, 29, 18, 30)),
     Order(
+        ordernumber: 3,
         tableNumber: 3,
         itemName: 'Sushi',
         price: 200,
@@ -270,6 +274,22 @@ class _OrderScreenState extends State<OrderScreen> {
                     canDebug: false,
                     allowSharing: true,
                     canChangeOrientation: false,
+                    onPrinted: (context) {
+                      setState(() {
+                        for (var order in _orders) {
+                          order.billprinted = true;
+                          //   order.kotbuttonText = 'KOT Printed';
+                        }
+                      });
+                    },
+                    onShared: (context) {
+                      setState(() {
+                        for (var order in _orders) {
+                          order.billprinted = true;
+                          //  order.kotbuttonText = 'Print KOT';
+                        }
+                      });
+                    },
                     canChangePageFormat: false,
                     build: (format) => snapshot.data!,
                   );
@@ -388,6 +408,18 @@ class _OrderScreenState extends State<OrderScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
+                          'Order Number: ',
+                          style: GoogleFonts.poppins(color: Colors.white),
+                        ),
+                        Text(
+                          '${_orders[index].ordernumber} ',
+                          style: GoogleFonts.poppins(
+                              color: Colors.black, fontSize: 18),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Text(
                           'Total Price: ',
                           style: GoogleFonts.poppins(color: Colors.white),
                         ),
@@ -474,20 +506,28 @@ class _OrderScreenState extends State<OrderScreen> {
                           style: ElevatedButton.styleFrom(
                               minimumSize: Size(70, 70),
                               backgroundColor: _orders[index].kotprinted
-                                  ? Colors.green
+                                  ? (_orders[index].billprinted
+                                      ? Colors.green
+                                      : Colors.black)
                                   : Colors.black),
-                          onPressed: _orders[index].orderAccepted == false
+                          onPressed: _orders[index].orderAccepted == false ||
+                                  _orders[index].cancelled == true
                               ? null
                               : () {
                                   setState(() {
                                     _orders[index].kotprinted = true;
-                                    _orders[index].kotbuttonText =
-                                        'KOT printed';
+                                    // _orders[index].kotbuttonText =
+                                    //     'KOT printed';
                                     _showPdfPreview(context);
                                   });
                                 },
                           child: Text(
-                            _orders[index].kotbuttonText,
+                            //  _orders[index].kotbuttonText,
+                            _orders[index].kotprinted
+                                ? (_orders[index].billprinted
+                                    ? 'KOT Printed'
+                                    : 'Print KOT')
+                                : 'Print KOT',
                             style: GoogleFonts.poppins(fontSize: 18),
                           ),
                         ),
