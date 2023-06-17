@@ -26,13 +26,14 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/home': (context) => OrderScreen(),
+        '/order': (context) => OrderScreen(),
         '/staff_info': (context) => StaffDetailsScreen(),
         '/about_us': (context) => AboutUsScreen(),
         '/login': (context) => LoginScreen(),
         //    "/printpreview": (context) => PrintPdf(),
+        '/home': (context) => HomeScreen(),
       },
-      home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }
