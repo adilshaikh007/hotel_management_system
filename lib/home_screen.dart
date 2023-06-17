@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hotel_management_system/about_us_screen.dart';
 import 'package:hotel_management_system/login_screen.dart';
+import 'package:hotel_management_system/menu_screen.dart';
 import 'package:hotel_management_system/order_screen.dart';
 import 'package:hotel_management_system/staff_details_screen.dart';
 
@@ -100,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       pageController.jumpToPage(1);
                     },
                     child: Text(
-                      "Staff Details",
+                      "Menu",
                       style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -156,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: pageController,
         children: [
           OrderScreen(),
-          StaffDetailsScreen(),
+          MenuScreen(),
           AboutUsScreen(),
           LoginScreen(),
         ],
