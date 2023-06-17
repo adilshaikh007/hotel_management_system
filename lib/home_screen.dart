@@ -49,8 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: GoogleFonts.poppins(color: Colors.red),
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushReplacementNamed("/login");
                     Navigator.of(context).pop();
+                    Navigator.pushReplacementNamed(context, '/login');
                   },
                 ),
               ],

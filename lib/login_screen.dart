@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_final_fields, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -27,10 +29,9 @@ class _LoginScreenState extends State<LoginScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromARGB(255, 14, 76, 168),
-              Color.fromARGB(255, 22, 103, 196),
-              Color.fromARGB(255, 25, 120, 214),
-              Color.fromARGB(255, 31, 138, 231),
+              Color.fromARGB(255, 15, 136, 173),
+              Color.fromARGB(255, 19, 160, 185),
+              Colors.cyan,
             ],
           ),
         ),
@@ -41,13 +42,20 @@ class _LoginScreenState extends State<LoginScreen> {
               key: _formKey,
               child: Column(
                 children: [
-                  Image.asset(
-                    'assets/images/logo.jpg',
-                    width: 150.0,
-                    height: 150.0,
+                  CircleAvatar(
+                      radius: 80,
+                      backgroundImage: AssetImage('assets/images/logo.jpg')),
+                  SizedBox(height: 20.0),
+                  Text(
+                    "SnapServe",
+                    style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40),
                   ),
                   SizedBox(height: 20.0),
                   Container(
+                    width: 500,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
                       color: Colors.white.withOpacity(0.3),
@@ -67,12 +75,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (value!.isEmpty) {
                           return 'Please enter your User ID';
                         }
+                        if (value.startsWith(
+                                new RegExp(r'[!@#$%^&*(),.?":{}|<>]')) ||
+                            value.startsWith(RegExp(r'[0-9]'))) {
+                          return 'Username should not start with a number or special character';
+                        }
+                        if (value.length < 4) {
+                          return 'Username is too short';
+                        }
                         return null;
                       },
                     ),
                   ),
                   SizedBox(height: 20.0),
                   Container(
+                    width: 500,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
                       color: Colors.white.withOpacity(0.3),
@@ -93,13 +110,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (value!.isEmpty) {
                           return 'Please enter your password';
                         }
+                        if (value.length < 4) {
+                          return 'Password should be atleast 4 characters';
+                        }
                         return null;
                       },
                     ),
                   ),
                   SizedBox(height: 20.0),
                   SizedBox(
-                    width: double.infinity,
+                    width: 200,
                     height: 50.0,
                     child: ElevatedButton(
                       onPressed: () {
@@ -108,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
