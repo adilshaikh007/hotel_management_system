@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_final_fields, unused_field, unnecessary_string_interpolations, unnecessary_brace_in_string_interps, deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hotel_management_system/about_us_screen.dart';
+//import 'package:hotel_management_system/about_us_screen.dart';
 import 'package:hotel_management_system/menu_screen.dart';
 import 'package:hotel_management_system/print_pdf.dart';
 import 'package:hotel_management_system/home_screen.dart';
@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/order': (context) => OrderScreen(),
         '/staff_info': (context) => StaffDetailsScreen(),
-        '/about_us': (context) => AboutUsScreen(),
+        // '/about_us': (context) => AboutUsScreen(),
         '/login': (context) => LoginScreen(),
         //    "/printpreview": (context) => PrintPdf(),
         '/menu': (context) => MenuScreen(),
